@@ -32,13 +32,40 @@ string_proc_list* string_proc_list_invert(string_proc_list* list){	return NULL;}
 
 /** AUX FUNCTIONS **/
 //TODO: DEBE IMPLEMENTAR
-uint32_t str_len(char* a) { return 0; }
+uint32_t str_len(char* a) { 
+	uint32_t cont = 0;
+	while(a != NULL && *a != '\0') {
+		cont++;
+		a++;
+	}
+	return cont;
+}
 
 //TODO: DEBE IMPLEMENTAR
-char* str_copy(char* a) { return NULL; }
+char* str_copy(char* a) { 
+	uint32_t length = str_len(a);
+	char* copy = malloc(length);
+	for (uint32_t i = 0; i < length; ++i) {
+		copy[i] = a[i];
+	}
+	return copy;
+}
 
 //TODO: DEBE IMPLEMENTAR
-int32_t str_cmp(char* a, char* b) { return -1000;}
+int32_t str_cmp(char* a, char* b) {
+	// Mismo tamaño
+	uint32_t lengthA = str_len(a);
+	uint32_t lengthB = str_len(b);
+	if (lengthA != lengthB) return false;
+
+	// Mismos chars
+	for (uint32_t i = 0; i < lengthA; ++i) {
+		if (a[i] != b[i]) {
+			return false;
+		}
+	}
+	return true;
+}
 
 /** **/
 char wrap_around_int(int32_t value){

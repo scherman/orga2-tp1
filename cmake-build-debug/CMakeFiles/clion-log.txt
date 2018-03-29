@@ -1,0 +1,4 @@
+/usr/local/clion-2017.1.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/jscherman/Documents/orga2-tp1
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jscherman/Documents/orga2-tp1/cmake-build-debug

@@ -4,17 +4,20 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 /**
 *	crea y destruye a una lista vacía
 */
 void test_create_destroy_list(){
-	char* name = "jony!xD";
-	printf("asd1");
-	string_proc_list* list =  string_proc_list_create(name);
-	printf("asd2");
-	string_proc_list_destroy(list);
-	printf("asd3");	
+	char* name = "jony";
+	char* copia = str_copy(name);
+//	uint32_t mismos = str_cmp(copia, "jony\0");
+//	string_proc_list* list =  string_proc_list_create(name);
+
+	free(copia);
+//	assert(list->name == "jony");
+//	string_proc_list_destroy(list);
 }
 
 /**
@@ -23,6 +26,7 @@ void test_create_destroy_list(){
 *	(por ej. shift_2, unshift_2)
 */
 void test_create_destroy_node(){
+	printf("test_create_destroy_node");
 }
 
 /**

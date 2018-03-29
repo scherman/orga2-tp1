@@ -25,7 +25,7 @@ section .text
 global string_proc_list_create
 string_proc_list_create:
 	push rbp
-	mov rsp, rbp
+	mov rbp, rsp
 
 	push rdi ; salvo name de rdi
 
@@ -37,9 +37,9 @@ string_proc_list_create:
 	pop rdi ; reestablezco name en rdi
 
 	; inicializo struct
-	mov dword [rax + STRUCT_STRING_PROC_LIST_NAME_OFFSET], edi
-	mov dword [rax + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], NULL
-	mov dword [rax + STRUCT_STRING_PROC_LIST_LAST_OFFSET], NULL
+	mov qword [rax + STRUCT_STRING_PROC_LIST_NAME_OFFSET], rdi
+	mov qword [rax + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], 0
+	mov qword [rax + STRUCT_STRING_PROC_LIST_LAST_OFFSET], 0
 
 	pop rbp
 	ret

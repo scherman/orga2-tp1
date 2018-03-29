@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jscherman/Documents/orga2-tp1/main.c
+string_processor.h
+/home/jscherman/Documents/orga2-tp1/string_processor.h
+stdlib.h
+-
+string.h
+-
+ctype.h
+-
+math.h
+-
+stdio.h
+-
+assert.h
+-
+
+/home/jscherman/Documents/orga2-tp1/string_processor.c
+stdbool.h
+-
+stdio.h
+-
+string_processor.h
+/home/jscherman/Documents/orga2-tp1/string_processor.h
+
+/home/jscherman/Documents/orga2-tp1/string_processor.h
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+assert.h
+-
+stdbool.h
+-
+
