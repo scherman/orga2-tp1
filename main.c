@@ -10,8 +10,11 @@
 */
 void test_create_destroy_list(){
 	char* name = "jony!xD";
+	printf("asd1");
 	string_proc_list* list =  string_proc_list_create(name);
+	printf("asd2");
 	string_proc_list_destroy(list);
+	printf("asd3");	
 }
 
 /**
@@ -122,17 +125,17 @@ void run_tests(){
 
 	test_print_list();
 
-	test_shift_2();
+	// test_shift_2();
 	
-	test_shift_position();
+	// test_shift_position();
 
-	test_saturate_2();
+	// test_saturate_2();
 
-	test_saturate_position();
+	// test_saturate_position();
 
-	test_combo_reversible();
+	// test_combo_reversible();
 
-	test_combo_irreversible();
+	// test_combo_irreversible();
 }
 
 int main (void){

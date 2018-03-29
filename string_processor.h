@@ -12,17 +12,19 @@ typedef enum string_proc_func_type_t{
 	IRREVERSIBLE	= 1
 } __attribute__((__packed__)) string_proc_func_type;
 
+
+// size: 12B
 typedef struct string_proc_key_t {
-	uint32_t length;
-	char* value;
+	uint32_t length; // 4B
+	char* value; // 8B (ptr)
 } __attribute__((__packed__)) string_proc_key; 
 typedef void (*string_proc_func) (string_proc_key*);
 
-// size 74B
+// size 24B
 typedef struct string_proc_list_t {
 	char* name; // 8B (ptr)
-	struct string_proc_node_t* first; // 33B
-	struct string_proc_node_t* last; // 33B
+	struct string_proc_node_t* first; // 8B (ptr)
+	struct string_proc_node_t* last; // 8B (ptr)
 } __attribute__((__packed__)) string_proc_list;
 
 // size 33B

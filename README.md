@@ -9,6 +9,7 @@ Los parámetros se pasan (de izquierda a derecha) por los registros
 - Si es entero o puntero se pasan respetando el orden usando:
 ```RDI, RSI, RDX, RCX, R8 y R9```
 - Si es de tipo flotante se pasan en los ```XMMs```
+
 Si no hay más registros disponibles se usa la pila, pero deberán
 quedar ordenados desde la dirección más baja a la más alta (se
 pushean de derecha a izquierda)

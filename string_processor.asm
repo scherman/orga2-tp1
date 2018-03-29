@@ -11,22 +11,35 @@
 	%define FALSE 0
 
 ; structs sizes
-	%define STRUCT_STRING_PROC_LIST_SIZE 74
+	%define STRUCT_STRING_PROC_LIST_SIZE 24
 
+; structs offsets
+	%define STRUCT_STRING_PROC_LIST_NAME_OFFSET 0
+	%define STRUCT_STRING_PROC_LIST_FIRST_OFFSET 8
+	%define STRUCT_STRING_PROC_LIST_LAST_OFFSET 16
 section .data
 
 
 section .text
 
 global string_proc_list_create
-string_proc_list_create:	
+string_proc_list_create:
 	push rbp
 	mov rsp, rbp
+
+	push rdi ; salvo name de rdi
 
 	; pido memoria para el struct
 	mov rdi, STRUCT_STRING_PROC_LIST_SIZE
 	call malloc
 	; obtengo ptr en rax
+
+	pop rdi ; reestablezco name en rdi
+
+	; inicializo struct
+	mov dword [rax + STRUCT_STRING_PROC_LIST_NAME_OFFSET], edi
+	mov dword [rax + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], NULL
+	mov dword [rax + STRUCT_STRING_PROC_LIST_LAST_OFFSET], NULL
 
 	pop rbp
 	ret
