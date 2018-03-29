@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <stdbool.h>
 /**  **/
+
+// size: 1B
 typedef enum string_proc_func_type_t{
 	REVERSIBLE 		= 0,
 	IRREVERSIBLE	= 1
@@ -15,18 +17,21 @@ typedef struct string_proc_key_t {
 	char* value;
 } __attribute__((__packed__)) string_proc_key; 
 typedef void (*string_proc_func) (string_proc_key*);
+
+// size 74B
 typedef struct string_proc_list_t {
-	char* name;
-	struct string_proc_node_t* first;
-	struct string_proc_node_t* last;
+	char* name; // 8B (ptr)
+	struct string_proc_node_t* first; // 33B
+	struct string_proc_node_t* last; // 33B
 } __attribute__((__packed__)) string_proc_list;
 
+// size 33B
 typedef struct string_proc_node_t {
-	struct string_proc_node_t* next;
-	struct string_proc_node_t* previous;
-	string_proc_func f;
-	string_proc_func g;
-	string_proc_func_type type;
+	struct string_proc_node_t* next; // 8B (ptr)
+	struct string_proc_node_t* previous; // 8B (ptr)
+	string_proc_func f; // 8B (ptr)
+	string_proc_func g; // 8B (ptr)
+	string_proc_func_type type; // 1B
 } __attribute__((__packed__)) string_proc_node;
        
 /**  **/

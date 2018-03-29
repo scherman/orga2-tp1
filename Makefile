@@ -3,7 +3,7 @@ CFLAGS= -Wall -Wextra -pedantic -O0 -g -lm -Wno-unused-variable -Wno-unused-para
 NASM=nasm
 NASMFLAGS=-f elf64 -g -F DWARF
 
-all: main tester
+all: main
 
 main: main.c string_processor_c.o string_processor_asm.o
 	$(CC) $(CFLAGS) $^ -o $@

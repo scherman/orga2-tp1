@@ -9,6 +9,9 @@
 *	crea y destruye a una lista vacía
 */
 void test_create_destroy_list(){
+	char* name = "jony!xD";
+	string_proc_list* list =  string_proc_list_create(name);
+	string_proc_list_destroy(list);
 }
 
 /**
