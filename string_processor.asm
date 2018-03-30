@@ -5,6 +5,7 @@
 	extern fclose
 	extern fprintf
 	extern str_copy
+	extern str_len
 
 ; /** defines bool y puntero **/
 	%define NULL 0
@@ -13,11 +14,18 @@
 
 ; structs sizes
 	%define STRUCT_STRING_PROC_LIST_SIZE 24
+	%define STRUCT_STRING_PROC_KEY_SIZE 12
+
 
 ; structs offsets
 	%define STRUCT_STRING_PROC_LIST_NAME_OFFSET 0
 	%define STRUCT_STRING_PROC_LIST_FIRST_OFFSET 8
 	%define STRUCT_STRING_PROC_LIST_LAST_OFFSET 16
+	
+	%define STRUCT_STRING_PROC_KEY_LENGTH_OFFSET 0
+	%define STRUCT_STRING_PROC_KEY_VALUE_OFFSET 4
+
+	
 section .data
 
 
@@ -66,6 +74,32 @@ string_proc_node_create:
 
 global string_proc_key_create
 string_proc_key_create:
+	push rbp
+	mov rbp, rsp
+
+	; copio value y lo guardo en rdi
+	call str_copy
+	mov rdi, rax
+
+	; calculo length
+	call str_len 
+
+	push rdi ; guardo *value
+	push rax ; guardo length
+
+	; pido memoria para la key
+	mov rdi, STRUCT_STRING_PROC_KEY_SIZE
+	call malloc
+	; obtengo *key en rax
+
+	pop rdi ; recupero length en rdi
+	pop rsi ; recupero *value en rsi
+
+	; inicializo key
+	mov qword [rax + STRUCT_STRING_PROC_KEY_LENGTH_OFFSET], rdi 
+	mov qword [rax + STRUCT_STRING_PROC_KEY_VALUE_OFFSET], rsi
+
+	pop rbp
 	ret
 
 global string_proc_list_destroy
@@ -96,6 +130,17 @@ string_proc_key_destroy:
 	push rbp
 	mov rbp, rsp
 
+	push rdi ; guardo *key
+
+	; borro value
+	mov rdi, [rdi + STRUCT_STRING_PROC_KEY_VALUE_OFFSET]
+	sub rsp, 8
+	call free
+	add rsp, 8
+
+	; borro key
+	pop rdi
+	call free
 
 	pop rbp
 	ret

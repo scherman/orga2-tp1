@@ -44,7 +44,7 @@ void test_str_copy() {
 *	crea y destruye a una lista vacía
 */
 void test_create_destroy_empty_list(){
-	printf("Corriendo test_create_destroy_empty_list.. ");
+	printf("Corriendo test_create_destroy_empty_list... ");
 
 	char* name = LIST_NAME;
 	string_proc_list* list =  string_proc_list_create(name);
@@ -59,22 +59,24 @@ void test_create_destroy_empty_list(){
 }
 
 /**
-*	crea y destruye un nodo
-*	para esta función es conveniente haber implementado al menos un par de funciones
-*	(por ej. shift_2, unshift_2)
-*/
-void test_create_destroy_node(){
-}
-
-/**
-*	crea y destruye una clave 
+*	crea y destruye una clave
 */
 void test_create_destroy_key(){
+	printf("Corriendo test_create_destroy_key... ");
 	string_proc_key *key = string_proc_key_create(KEY_NAME);
 	assert(str_cmp(key->value, KEY_NAME));
 	assert(key->length == KEY_NAME_LENGTH);
 
 	string_proc_key_destroy(key);
+	printf("OK \n");
+}
+
+/**
+*	crea y destruye un nodo
+*	para esta función es conveniente haber implementado al menos un par de funciones
+*	(por ej. shift_2, unshift_2)
+*/
+void test_create_destroy_node(){
 }
 
 /**
@@ -171,9 +173,9 @@ void run_tests(){
 
 	test_create_destroy_empty_list();
 
-	// test_create_destroy_node();
+	test_create_destroy_key();
 
-	// test_create_destroy_key();
+	// test_create_destroy_node();
 
 	// test_print_list();
 
