@@ -15,7 +15,7 @@
 ; structs sizes
 	%define STRUCT_STRING_PROC_LIST_SIZE 24
 	%define STRUCT_STRING_PROC_KEY_SIZE 12
-
+	%define STRUCT_STRING_PROC_NODE_SIZE 40
 
 ; structs offsets
 	%define STRUCT_STRING_PROC_LIST_NAME_OFFSET 0
@@ -24,7 +24,13 @@
 	
 	%define STRUCT_STRING_PROC_KEY_LENGTH_OFFSET 0
 	%define STRUCT_STRING_PROC_KEY_VALUE_OFFSET 4
-
+	
+	%define STRUCT_STRING_PROC_NODE_NEXT_OFFSET 0
+	%define STRUCT_STRING_PROC_NODE_PREVIOUS_OFFSET 8
+	%define STRUCT_STRING_PROC_NODE_F_OFFSET 16
+	%define STRUCT_STRING_PROC_NODE_G_OFFSET 24
+	%define STRUCT_STRING_PROC_NODE_TYPE_OFFSET 32
+	
 	
 section .data
 
@@ -59,8 +65,8 @@ string_proc_list_create:
 
 	; inicializo struct (*list en RBX, *name en RAX)
 	mov qword [rbx + STRUCT_STRING_PROC_LIST_NAME_OFFSET], rax
-	mov qword [rbx + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], 0
-	mov qword [rbx + STRUCT_STRING_PROC_LIST_LAST_OFFSET], 0
+	mov qword [rbx + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], NULL
+	mov qword [rbx + STRUCT_STRING_PROC_LIST_LAST_OFFSET], NULL
 
 	mov rax, rbx ; guardo *list en RAX
 
@@ -70,6 +76,32 @@ string_proc_list_create:
 
 global string_proc_node_create
 string_proc_node_create:
+	push rbp
+	mov rbp, rsp
+
+	push rdi ; guardo f
+	push rsi ; guardo g
+	push rdx ; guardo type
+
+	; pido memoria para el node
+	mov rdi, STRUCT_STRING_PROC_NODE_SIZE
+	sub rsp, 8
+	call malloc
+	add rsp, 8
+	; obtengo *node en rax
+
+	pop rdx ; recupero type
+	pop rsi ; recupero g
+	pop rdi ; recupero f
+
+	; inicializo node
+	mov qword [rax + STRUCT_STRING_PROC_NODE_NEXT_OFFSET], NULL
+	mov qword [rax + STRUCT_STRING_PROC_NODE_PREVIOUS_OFFSET], NULL
+	mov qword [rax + STRUCT_STRING_PROC_NODE_F_OFFSET], rdi
+	mov qword [rax + STRUCT_STRING_PROC_NODE_G_OFFSET], rsi
+	mov qword [rax + STRUCT_STRING_PROC_NODE_TYPE_OFFSET], rdx
+
+	pop rbp
 	ret
 
 global string_proc_key_create
@@ -123,6 +155,12 @@ string_proc_list_destroy:
 
 global string_proc_node_destroy
 string_proc_node_destroy:
+	push rbp
+	mov rbp, rsp
+
+	call free
+
+	pop rbp
 	ret
 
 global string_proc_key_destroy

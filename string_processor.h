@@ -27,13 +27,13 @@ typedef struct string_proc_list_t {
 	struct string_proc_node_t* last; // 8B (ptr)
 } __attribute__((__packed__)) string_proc_list;
 
-// size 33B
+// size 33B / 40B
 typedef struct string_proc_node_t {
 	struct string_proc_node_t* next; // 8B (ptr)
 	struct string_proc_node_t* previous; // 8B (ptr)
 	string_proc_func f; // 8B (ptr)
 	string_proc_func g; // 8B (ptr)
-	string_proc_func_type type; // 1B
+	string_proc_func_type type; // 1B / 8B
 } __attribute__((__packed__)) string_proc_node;
        
 /**  **/

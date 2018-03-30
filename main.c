@@ -13,6 +13,11 @@
 #define KEY_NAME "Miguel"
 #define KEY_NAME_LENGTH 6
 
+#define NODE_FUNCTION_F shift_2
+#define NODE_FUNCTION_G unshift_2
+#define NODE_TYPE REVERSIBLE
+
+
 void test_str_len() {
 	printf("Corriendo test_str_len... ");
 	assert(str_len(LIST_NAME) == LIST_NAME_LENGTH);
@@ -59,6 +64,29 @@ void test_create_destroy_empty_list(){
 }
 
 /**
+*	crea y destruye un nodo
+*	para esta función es conveniente haber implementado al menos un par de funciones
+*	(por ej. shift_2, unshift_2)
+*/
+void test_create_destroy_node(){
+	printf("Corriendo test_create_destroy_node... ");
+	string_proc_func f = NODE_FUNCTION_F;
+	string_proc_func g = NODE_FUNCTION_G;
+	string_proc_func_type type = NODE_TYPE;
+	string_proc_node *node = string_proc_node_create(f,g, type);
+
+	assert(node->f == NODE_FUNCTION_F);
+	assert(node->g == NODE_FUNCTION_G);
+	assert(node->type == NODE_TYPE);
+	assert(node->next == NULL);
+	assert(node->previous == NULL);
+
+	free(node);
+	// string_proc_node_destroy(node);
+	printf("OK \n");
+}
+
+/**
 *	crea y destruye una clave
 */
 void test_create_destroy_key(){
@@ -69,14 +97,6 @@ void test_create_destroy_key(){
 
 	string_proc_key_destroy(key);
 	printf("OK \n");
-}
-
-/**
-*	crea y destruye un nodo
-*	para esta función es conveniente haber implementado al menos un par de funciones
-*	(por ej. shift_2, unshift_2)
-*/
-void test_create_destroy_node(){
 }
 
 /**
@@ -171,11 +191,11 @@ void run_tests(){
 
 	test_str_copy();
 
+	test_create_destroy_key();
+	
 	test_create_destroy_empty_list();
 
-	test_create_destroy_key();
-
-	// test_create_destroy_node();
+	test_create_destroy_node();
 
 	// test_print_list();
 

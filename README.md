@@ -1,5 +1,8 @@
 # Orga 2 - TP1 
 
+## Preguntas
+1. Sobre malloc_size de string_proc_node (tuve que asignar de mas)
+
 Una función para cumplir con la Convención C debe:
 - Preservar ```RBX, R12, R13, R14 y R15```
 - Retornar el resultado en ```RAX``` o ```XMM0```
