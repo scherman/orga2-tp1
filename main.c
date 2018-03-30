@@ -16,6 +16,9 @@
 #define NODE_FUNCTION_F shift_2
 #define NODE_FUNCTION_G unshift_2
 #define NODE_TYPE REVERSIBLE
+#define ANOTHER_NODE_FUNCTION_F shift_position
+#define ANOTHER_NODE_FUNCTION_G unshift_position
+#define ANOTHER_NODE_TYPE IRREVERSIBLE
 
 
 void test_str_len() {
@@ -81,8 +84,7 @@ void test_create_destroy_node(){
 	assert(node->next == NULL);
 	assert(node->previous == NULL);
 
-	free(node);
-	// string_proc_node_destroy(node);
+	string_proc_node_destroy(node);
 	printf("OK \n");
 }
 
@@ -97,6 +99,45 @@ void test_create_destroy_key(){
 
 	string_proc_key_destroy(key);
 	printf("OK \n");
+}
+
+void test_add_node_to_list() {
+	printf("Corriendo test_add_node_to_list... ");
+
+	string_proc_list *list = string_proc_list_create(LIST_NAME);
+	
+	// agrego primer nodo
+	string_proc_list_add_node(list, NODE_FUNCTION_F, NODE_FUNCTION_G, NODE_TYPE);
+	assert(list->first != NULL);
+	assert(list->first == list->last);
+	assert(list->first->f == NODE_FUNCTION_F);
+	assert(list->first->g == NODE_FUNCTION_G);
+	assert(list->first->type == NODE_TYPE);
+	assert(list->first->next == NULL);
+	assert(list->first->previous == NULL);
+
+	// agrego segundo nodo
+	string_proc_list_add_node(list, ANOTHER_NODE_FUNCTION_F, ANOTHER_NODE_FUNCTION_G, ANOTHER_NODE_TYPE);
+	
+	assert(list->first != NULL);
+	assert(list->first->f == NODE_FUNCTION_F);
+	assert(list->first->g == NODE_FUNCTION_G);
+	assert(list->first->type == NODE_TYPE);
+	assert(list->first->previous == NULL);
+	assert(list->last != NULL);
+	assert(list->last->f == ANOTHER_NODE_FUNCTION_F);
+	assert(list->last->g == ANOTHER_NODE_FUNCTION_G);
+	assert(list->last->type == ANOTHER_NODE_TYPE);
+	assert(list->last->next == NULL);
+	assert(list->last->previous == list->first);
+	assert(list->first->next == list->last); 
+
+	string_proc_list_destroy(list);
+	printf("OK \n");
+}
+
+void test_create_destroy_nonempty_list() {
+
 }
 
 /**
@@ -185,19 +226,21 @@ void test_combo_irreversible(){
 */
 void run_tests(){
 
-	test_str_len();
+	// test_str_len();
 
-	test_str_cmp();
+	// test_str_cmp();
 
-	test_str_copy();
+	// test_str_copy();
 
-	test_create_destroy_key();
+	// test_create_destroy_key();
+
+	// test_create_destroy_empty_list();
+
+	// test_create_destroy_node();
+
+    test_add_node_to_list();
 	
-	test_create_destroy_empty_list();
-
-	test_create_destroy_node();
-
-	// test_print_list();
+    // test_print_list();
 
 	// test_shift_2();
 	

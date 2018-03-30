@@ -185,6 +185,44 @@ string_proc_key_destroy:
 
 global string_proc_list_add_node
 string_proc_list_add_node:
+	push rbp
+	mov rbp, rsp
+
+	push rdi ; guardo *list
+	push rsi ; guardo f
+	push rdx ; guardo g
+	push rcx ; guardo type
+
+	; creo node
+	mov rdi, rsi
+	mov rsi, rdx
+	mov rdx, rcx
+	call string_proc_node_create
+	; obtengo *node en rax
+
+	pop rcx ; recupero type 
+	pop rdx ; recupero g
+	pop rsi ; recupero f
+	pop rdi ; recupero *list
+
+	cmp qword [rdi + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], NULL
+	jz list_is_empty
+list_is_not_empty:
+	
+	; engancho nuevo nodo a ultimo nodo de la lista
+	mov r8, [rdi + STRUCT_STRING_PROC_LIST_LAST_OFFSET] ; guardo ultimo nodo en r8
+	mov [r8 + STRUCT_STRING_PROC_NODE_NEXT_OFFSET], rax ; 
+	mov [rax + STRUCT_STRING_PROC_NODE_PREVIOUS_OFFSET], r8 ; 
+
+	; seteo nuevo nodo como el ultimo de la lista
+	mov [rdi + STRUCT_STRING_PROC_LIST_LAST_OFFSET], rax 
+	jmp finish
+list_is_empty:
+	; apunto list->first,last a node
+	mov [rdi + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], rax
+	mov [rdi + STRUCT_STRING_PROC_LIST_LAST_OFFSET], rax
+finish: 
+	pop rbp
 	ret
 
 global string_proc_list_apply
