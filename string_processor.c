@@ -44,10 +44,11 @@ uint32_t str_len(char* a) {
 //TODO: DEBE IMPLEMENTAR
 char* str_copy(char* a) { 
 	uint32_t length = str_len(a);
-	char* copy = malloc(length);
+	char* copy = malloc(length + 1);
 	for (uint32_t i = 0; i < length; ++i) {
 		copy[i] = a[i];
 	}
+	copy[length] = '\0';
 	return copy;
 }
 

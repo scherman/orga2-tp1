@@ -93,6 +93,11 @@ string_proc_node_destroy:
 
 global string_proc_key_destroy
 string_proc_key_destroy:
+	push rbp
+	mov rbp, rsp
+
+
+	pop rbp
 	ret
 
 global string_proc_list_add_node
