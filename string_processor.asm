@@ -4,6 +4,7 @@
 	extern fopen
 	extern fclose
 	extern fprintf
+	extern str_copy
 
 ; /** defines bool y puntero **/
 	%define NULL 0
@@ -27,20 +28,35 @@ string_proc_list_create:
 	push rbp
 	mov rbp, rsp
 
-	push rdi ; salvo name de rdi
+	push rdi ; guardo *name
 
-	; pido memoria para el struct
+	; pido memoria para la list
 	mov rdi, STRUCT_STRING_PROC_LIST_SIZE
+	sub rsp, 8 ;
 	call malloc
-	; obtengo ptr en rax
+	add rsp, 8 ;
+	; obtengo el *list en RAX
 
-	pop rdi ; reestablezco name en rdi
+	pop rdi ; recupero *name en RDI
+	
+	; guardo el *list en en RBX 
+	push rbx 
+	mov rbx, rax
 
-	; inicializo struct
-	mov qword [rax + STRUCT_STRING_PROC_LIST_NAME_OFFSET], rdi
-	mov qword [rax + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], 0
-	mov qword [rax + STRUCT_STRING_PROC_LIST_LAST_OFFSET], 0
+	; copio name
+	sub rsp, 8 
+	call str_copy
+	add rsp, 8 
+	; obtengo *name(copy) en RAX
 
+	; inicializo struct (*list en RBX, *name en RAX)
+	mov qword [rbx + STRUCT_STRING_PROC_LIST_NAME_OFFSET], rax
+	mov qword [rbx + STRUCT_STRING_PROC_LIST_FIRST_OFFSET], 0
+	mov qword [rbx + STRUCT_STRING_PROC_LIST_LAST_OFFSET], 0
+
+	mov rax, rbx ; guardo *list en RAX
+
+	pop rbx
 	pop rbp
 	ret
 
@@ -55,9 +71,17 @@ string_proc_key_create:
 global string_proc_list_destroy
 string_proc_list_destroy:
 	push rbp
-	mov rsp, rbp
+	mov rbp, rsp
 
-	; libero rdi
+	; borro name
+	push rdi
+	sub rsp, 8
+	mov rdi, [rdi + STRUCT_STRING_PROC_LIST_NAME_OFFSET]
+	call free
+	add rsp, 8
+
+	; borro list
+	pop rdi
 	call free
 
 	pop rbp
