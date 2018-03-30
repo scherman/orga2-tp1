@@ -137,7 +137,13 @@ void test_add_node_to_list() {
 }
 
 void test_create_destroy_nonempty_list() {
+	printf("Corriendo test_create_destroy_nonempty_list... ");
+	string_proc_list *list = string_proc_list_create(LIST_NAME);
+	string_proc_list_add_node(list, NODE_FUNCTION_F, NODE_FUNCTION_G, NODE_TYPE);
+	string_proc_list_add_node(list, ANOTHER_NODE_FUNCTION_F, ANOTHER_NODE_FUNCTION_G, ANOTHER_NODE_TYPE);
 
+	string_proc_list_destroy(list);
+	printf("OK \n");
 }
 
 /**
@@ -226,19 +232,21 @@ void test_combo_irreversible(){
 */
 void run_tests(){
 
-	// test_str_len();
+	test_str_len();
 
-	// test_str_cmp();
+	test_str_cmp();
 
-	// test_str_copy();
+	test_str_copy();
 
-	// test_create_destroy_key();
+	test_create_destroy_key();
 
-	// test_create_destroy_empty_list();
+	test_create_destroy_empty_list();
 
-	// test_create_destroy_node();
+	test_create_destroy_node();
 
     test_add_node_to_list();
+
+	test_create_destroy_nonempty_list();
 	
     // test_print_list();
 

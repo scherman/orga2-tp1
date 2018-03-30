@@ -139,17 +139,30 @@ string_proc_list_destroy:
 	push rbp
 	mov rbp, rsp
 
-	; borro name
-	push rdi
-	sub rsp, 8
-	mov rdi, [rdi + STRUCT_STRING_PROC_LIST_NAME_OFFSET]
-	call free
-	add rsp, 8
+ 	push rdi ; guardo *list
 
-	; borro list
+	; borro nodos
+	mov rdi, [rdi + STRUCT_STRING_PROC_LIST_FIRST_OFFSET] ; ubico primer nodo en rdi
+delete_node:
+	cmp rdi, NULL
+	jz delete_list
+	push qword [rdi + STRUCT_STRING_PROC_NODE_NEXT_OFFSET] ; guardo siguiente del actual
+	call string_proc_node_destroy
 	pop rdi
-	call free
+	jmp delete_node
 
+delete_list: 
+
+	; borro name
+	pop rsi ; recupero *list
+	mov rdi, [rsi + STRUCT_STRING_PROC_LIST_NAME_OFFSET]
+	push rsi ; guardo *list
+	call free
+	pop rsi ; recupero *list
+	; borro list
+	mov rdi, rsi
+	call free
+	
 	pop rbp
 	ret
 
