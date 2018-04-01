@@ -240,4 +240,55 @@ finish:
 
 global string_proc_list_apply
 string_proc_list_apply:
+	push rbp
+	mov rbp, rsp
+
+	; guardo regs
+	push rbx ; 
+	push r12 ;
+	push r13 ;
+	%define first rbx
+	%define function r12
+	%define next r13
+
+	; ¿encode o decode?
+	cmp rdx, 1
+	jz encode
+decode:
+	mov first, STRUCT_STRING_PROC_LIST_LAST_OFFSET
+	mov function, STRUCT_STRING_PROC_NODE_G_OFFSET
+	mov next, STRUCT_STRING_PROC_NODE_PREVIOUS_OFFSET
+	jmp bring_first
+encode:
+	mov first, STRUCT_STRING_PROC_LIST_FIRST_OFFSET
+	mov function, STRUCT_STRING_PROC_NODE_F_OFFSET
+	mov next, STRUCT_STRING_PROC_NODE_NEXT_OFFSET
+bring_first: 
+	; traigo primer nodo en rdx
+	mov rdx, [rdi + first]
+cycle_apply:
+	; termino si es nulo
+	cmp rdx, NULL
+	jz finish_apply
+
+	; ejecuto funcion
+	mov rdi, rsi
+	push rsi ; guardo *key
+	push rdx ; guardo *nodo actual
+	sub rsp, 8
+	call [rdx + function]
+	add rsp, 8
+	pop rdx ; recupero *nodo actual
+	pop rsi ; recupero *key
+	
+	; pongo al nodo anterior en rdx y repito
+	mov rdx, [rdx + next]
+	jmp cycle_apply
+finish_apply:
+	; recupero regs
+	pop r13 
+	pop r12
+	pop rbx
+
+	pop rbp
 	ret

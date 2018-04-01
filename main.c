@@ -12,6 +12,8 @@
 
 #define KEY_NAME "Miguel"
 #define KEY_NAME_LENGTH 6
+#define KEY_NAME_ENCODED "Miguel"
+#define KEY_NAME_ENCODED_LENGTH 6
 
 #define NODE_FUNCTION_F shift_2
 #define NODE_FUNCTION_G unshift_2
@@ -146,6 +148,23 @@ void test_create_destroy_nonempty_list() {
 	printf("OK \n");
 }
 
+
+void test_apply() {
+	printf("Corriendo test_apply... ");
+	string_proc_list *list = string_proc_list_create(LIST_NAME);
+	string_proc_list_add_node(list, NODE_FUNCTION_F, NODE_FUNCTION_G, NODE_TYPE);
+	string_proc_list_add_node(list, ANOTHER_NODE_FUNCTION_F, ANOTHER_NODE_FUNCTION_G, ANOTHER_NODE_TYPE);
+
+	string_proc_key *key = string_proc_key_create(KEY_NAME);
+	string_proc_list_apply(list, key, 0);
+	assert(str_cmp(key->value, KEY_NAME_ENCODED));
+	assert(key->length == KEY_NAME_ENCODED_LENGTH);
+	
+	string_proc_key_destroy(key);
+	string_proc_list_destroy(list);
+	printf("OK \n");
+}
+
 /**
 *	crea una lista y la imprime por salida standard (stdout)		
 */
@@ -248,6 +267,8 @@ void run_tests(){
 
 	test_create_destroy_nonempty_list();
 	
+	test_apply();
+
     // test_print_list();
 
 	// test_shift_2();

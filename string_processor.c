@@ -88,13 +88,25 @@ char saturate_int(int32_t value){
 }
 
 //TODO: DEBE IMPLEMENTAR
-void shift_2(string_proc_key* key){}
+void shift_2(string_proc_key* key){
+	// free(key->value);
+	// key->value = malloc(4);
+	// strcpy(key->value, "Fito");
+	// key->length = 4;
+	printf("Funcion SHIFT_2 %s \n", key->value);
+}
 //TODO: DEBE IMPLEMENTAR
-void unshift_2(string_proc_key* key){}
+void unshift_2(string_proc_key* key){
+	printf("Funcion UNSHIFT_2 a %s\n", key->value);
+}
 //TODO: DEBE IMPLEMENTAR
-void shift_position(string_proc_key* key){}
+void shift_position(string_proc_key* key){
+	printf("Funcion SHIFT_POSITION a %s\n", key->value);
+}
 //TODO: DEBE IMPLEMENTAR
-void unshift_position(string_proc_key* key){}
+void unshift_position(string_proc_key* key){
+	printf("Funcion UNSHIFT_POSITION a %s\n", key->value);
+}
 //TODO: DEBE IMPLEMENTAR
 void saturate_2(string_proc_key* key){}
 //TODO: DEBE IMPLEMENTAR
