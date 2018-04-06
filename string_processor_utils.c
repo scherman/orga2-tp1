@@ -191,7 +191,7 @@ void unsaturate_2_odd(string_proc_key* key){
 }
 
 int32_t isPrime(int32_t num){
-    if (num <= 1) return false;
+    if (num < 2) return false;
     for (int32_t d = 2; d < num; d = d + 1) {
 	    if (num % d == 0) return 0;
     }

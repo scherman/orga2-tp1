@@ -132,8 +132,8 @@ string_proc_key_create: ; value(rdi) : void
 	pop rsi ; a; valueCopy(rsi)
 
 	; inicializo key
-	mov dword [rax + STRUCT_STRING_PROC_KEY_LENGTH_OFFSET], edi 
-	mov qword [rax + STRUCT_STRING_PROC_KEY_VALUE_OFFSET], rsi
+	mov [rax + STRUCT_STRING_PROC_KEY_LENGTH_OFFSET], edi 
+	mov [rax + STRUCT_STRING_PROC_KEY_VALUE_OFFSET], rsi
 	; key(rax)
 
 	pop rbp ; n/a
@@ -176,7 +176,7 @@ string_proc_node_destroy: ; node(rdi) : void
 
 	call free ; ptr(rdi) : void
 
-	pop rbp
+	pop rbp ; n/a
 	ret
 
 global string_proc_key_destroy
@@ -193,7 +193,7 @@ string_proc_key_destroy: ; key(rdi) : void
 	.delete_key:
 		pop rdi ; a ; key(rdi)
 		call free ; ptr(rdi) : void
-	pop rbp
+	pop rbp ; n/a
 	ret
 
 global string_proc_list_add_node
