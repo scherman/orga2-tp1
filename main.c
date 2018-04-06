@@ -19,11 +19,11 @@
 #define ANOTHER_NODE_REV_FUNCTION_F shift_position
 #define ANOTHER_NODE_REV_FUNCTION_G unshift_position
 #define ANOTHER_NODE_REV_TYPE REVERSIBLE
-#define NODE_IRREV_FUNCTION_F shift_2
-#define NODE_IRREV_FUNCTION_G unshift_2
+#define NODE_IRREV_FUNCTION_F saturate_2
+#define NODE_IRREV_FUNCTION_G unsaturate_2
 #define NODE_IRREV_TYPE IRREVERSIBLE
-#define ANOTHER_NODE_IRREV_FUNCTION_F shift_position
-#define ANOTHER_NODE_IRREV_FUNCTION_G unshift_position
+#define ANOTHER_NODE_IRREV_FUNCTION_F saturate_position
+#define ANOTHER_NODE_IRREV_FUNCTION_G unsaturate_position
 #define ANOTHER_NODE_IRREV_TYPE IRREVERSIBLE
 
 #define ENCODE true
